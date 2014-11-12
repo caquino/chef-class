@@ -8,7 +8,7 @@ slidenumbers: true
 ---
 # REQUIREMENTS
 1. Homebrew _http://brew.sh/_ (*brew doctor!*)
-1. brew-cask _brew install brew-cask_
+1. brew-cask _brew install caskroom/cask/brew-cask_
 1. Virtualbox _brew cask install virtualbox_
 1. Vagrant _brew cask install vagrant_
 1. Git _brew install git_
