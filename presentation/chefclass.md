@@ -16,8 +16,8 @@ slidenumbers: true
 ---
 # Lab 
 ## bootstrap
-1. git clone http://github.com/caquino/chef_class
-1. cd chef_class
+1. git clone http://github.com/caquino/chef-class
+1. cd chef-class
 1. vagrant up
 
 ---
