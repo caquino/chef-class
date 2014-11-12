@@ -1,0 +1,4 @@
+.vagrant
+*.pem
+chef/deb-cache/
+*.deb
