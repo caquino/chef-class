@@ -2,3 +2,4 @@
 *.pem
 chef/deb-cache/
 *.deb
+.DS_Store
