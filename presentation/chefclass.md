@@ -28,23 +28,11 @@ slidenumbers: true
 ---
 # Lab 
 ## VM's
-* Server (SSH/WEB INTERFACE) _hostname_: chefs
-* Client (SSH) _hostname_: chefc1, chefc2
+* Server (SSH) _hostname_: chefs
+* Client (SSH) _hostname_: chefc1, chefc2, chefc3
 * Development station (SSH) _hostname_: chefd
 
-_SSH Access_: vagrant ssh _<hostname>_ e.g: (chefs|chefc1|chefc2|chefd)
-
-_WEB-UI Access_: http://chefs.local
-
----
-# KNIFE 
-## configuration
-1. User private key _web-ui_
-Access WEB-UI go to _Users -> Create_
-Make sure you select _admin_
-Save the private key at _chefd:~vagrant/.chef/<username>.pem_
-1. Validation private key _chefs:/etc/chef-server_
-save the file at _~/.chef/chef-validator.pem_
+_SSH Access_: vagrant ssh _<hostname>_ e.g: (chefs|chefc1|chefc2|chefc3|chefd)
 
 ___
 # KNIFE 
@@ -56,12 +44,12 @@ vagrant@chefd:~$ vi ~/.chef/knife.rb
 user = ENV['USER'] || 'YOUR USERNAME'
 node_name user
 client_key "#{ENV['HOME']}/.chef/#{user}.pem"
-validation_client_name "chef-validator"
+validation_client_name "chefclass-validator"
 validation_key "#{ENV['HOME']}/.chef/chef-validator.pem"
-chef_server_url "https://chefs.local/"
+chef_server_url "https://chefs.local/organizations/chefclass"
 syntax_check_cache_path "#{ENV['HOME']}/.chef/syntax_check_cache"
 cookbook_path [ "#{ENV['HOME']}/chef/cookbooks" ]
-knife[:editor]="/usr/bin/vi"
+knife[:editor]="/usr/bin/vim"
 ```
 
 ___
