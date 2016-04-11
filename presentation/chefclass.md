@@ -6,6 +6,41 @@ slidenumbers: true
 #[FIT]BUDDHY
 
 ---
+#[FIT]WHISKEY
+#[FIT]TANGO
+#[FIT]FOXTROT?
+
+---
+# What's Chef?
+
+- Automation platform
+- Infrastructure as Code
+- Servers and Service Management
+- Infrastructure state database
+
+---
+# Components
+
+- Server
+- Client
+- Workstation
+
+---
+# Building blocks
+
+- Achieving desired state
+- Centralized modeling of Infrastructure
+- Resource primitives (package, user, ...)
+
+---
+# Flavours
+
+- Open source edition
+- Enterprise edition
+- Hosted
+- chef-solo
+
+---
 # REQUIREMENTS
 1. Homebrew _http://brew.sh/_ (*brew doctor!*)
 1. brew-cask _brew install caskroom/cask/brew-cask_
@@ -13,8 +48,10 @@ slidenumbers: true
 1. Vagrant _brew cask install vagrant_
 1. Git _brew install git_
 
+_Available @ Finder > Shared > 13589-caquino > Chef-Class_
+
 ---
-# Lab 
+# Lab
 ## bootstrap
 1. git clone http://github.com/caquino/chef-class
 1. cd chef-class
@@ -26,7 +63,7 @@ slidenumbers: true
 ![inline](diagram.png)
 
 ---
-# Lab 
+# Lab
 ## VM's
 * Server (SSH) _hostname_: chefs
 * Client (SSH) _hostname_: chefc1, chefc2, chefc3
@@ -35,8 +72,8 @@ slidenumbers: true
 _SSH Access_: vagrant ssh _<hostname>_ e.g: (chefs|chefc1|chefc2|chefc3|chefd)
 
 ___
-# KNIFE 
-## configuration 
+# KNIFE
+## configuration
 ```
 vagrant@chefd:~$ vi ~/.chef/knife.rb
 ```
@@ -62,13 +99,13 @@ ___
 vagrant@chefd:~$ knife bootstrap -x vagrant chefc1.local -N chefc1.local --sudo
 vagrant@chefd:~$ knife bootstrap -x vagrant chefc2.local -N chefc2.local --sudo
 vagrant@chefd:~$ knife bootstrap -x vagrant chefc3.local -N chefc3.local --sudo
-vagrant@chefd:~$ printf "%s\n" {1..3} | xargs -P 3 -I % knife bootstrap -x vagrant 
+vagrant@chefd:~$ printf "%s\n" {1..3} | xargs -P 3 -I % knife bootstrap -x vagrant
 chefc%.local -N chefc%.local --sudo
 ```
 
 ---
 # ENVIRONMENTS
-- map an organization’s real-life workflow 
+- map an organization’s real-life workflow
 e.g: _production, staging, testing, and development environments._
 - also associated with one (or more) cookbook versions.
 
@@ -79,12 +116,12 @@ vagrant@chefd:~$ knife node environment_set chefc1.local lab_environment
 vagrant@chefd:~$ knife node environment_set chefc2.local lab_environment
 vagrant@chefd:~$ knife node environment_set chefc3.local lab_environment
 
-vagrant@chefd:~$ printf "%s\n" {1..3} | xargs -P 3 -I % knife node 
+vagrant@chefd:~$ printf "%s\n" {1..3} | xargs -P 3 -I % knife node
 environment_set chefc%.local lab_environment
 ```
 
 ---
-# Nodes 
+# Nodes
 - physical, virtual, or cloud machine that is configured to be maintained by a chef-client.
 - attributes and a run_list e.g:
 
@@ -92,7 +129,7 @@ environment_set chefc%.local lab_environment
 vagrant@chefd:~$ knife node <show|edit|delete> <nodename> [-l]
 vagrant@chefd:~$ knife node show chefc2.local
 vagrant@chefd:~$ knife node show -l chefc1.local | less
-vagrant@chefd:~$ knife node edit chefc1.local 
+vagrant@chefd:~$ knife node edit chefc1.local
 ```
 ---
 # RUN_LIST
@@ -106,7 +143,7 @@ vagrant@chefd:~$ knife node edit chefc1.local
 - ohai _automatic attributes_
 try it! vagrant@chefc1:~/$ _ohai_
 - cookbooks _code / attributes file_
-- roles 
+- roles
 - environment
 - node
 
@@ -134,13 +171,13 @@ vagrant@chefd:~$ ssh chefc1.local sudo /usr/bin/chef-client
 vagrant@chefd:~$ ssh chefc2.local sudo /usr/bin/chef-client
 vagrant@chefd:~$ ssh chefc3.local sudo /usr/bin/chef-client
 
-vagrant@chefd:~$ printf "%s\n" {1..3} | 
+vagrant@chefd:~$ printf "%s\n" {1..3} |
 xargs -P 3 -I % ssh chefc%.local sudo /usr/bin/chef-client
 ```
 
 ---
 # Cookbooks
-- fundamental unit of configuration and policy distribution. 
+- fundamental unit of configuration and policy distribution.
 - defines a scenario, e.g: _everything needed to install and configure MySQL_
 -  all of the components that are required to support that scenario, e.g: _Attributes, Files, Recipes, Resources, Providers, Templates, Versions, Metadata_
 
@@ -322,12 +359,12 @@ global
         user haproxy
         group haproxy
         daemon
-   
+
 listen http 0.0.0.0:80
         <% @pool_members.each do |member| -%>
-        server <%= member[:hostname] %> <%= member[:network][:interfaces][:eth1][:addresses].select 
+        server <%= member[:hostname] %> <%= member[:network][:interfaces][:eth1][:addresses].select
         { |address, data| data[:family] == 'inet' }.keys[0] %>
-			<% end -%>  
+			<% end -%>
 
 <% if node["haproxy"]["enable_admin"] -%>
 listen admin 0.0.0.0:22002
@@ -423,7 +460,7 @@ vagrant@chefd:~$ knife node edit chefc1.local
   },   "run_list": [
     "role[lab_lb_role]"
   ]
- 
+
 }
 ```
 ```
@@ -442,16 +479,16 @@ vagrant@chefd:~$ ssh chefc1.local sudo /usr/bin/chef-client
 node[chefc1.local]
 	role[lab_lb_role]
 		recipe[lab_haproxy_cookbook]
-		
+
 node[chefc2.local]
 	role[lab_web_role]
 		recipe[lab_nginx_cookbook]
-		
+
 node[chefc3.local]
 	role[lab_web_role]
 		recipe[lab_nginx_cookbook]
 ```
-	
+
 ---
 # Data bags
 - global variable that is stored as JSON data
@@ -508,12 +545,12 @@ global
   user haproxy
   group haproxy
   daemon
-   
+
 listen http 0.0.0.0:80
   <% @pool_members.each do |member| -%>
-  server <%= member[:hostname] %> <%= member[:network][:interfaces][:eth1][:addresses].select 
+  server <%= member[:hostname] %> <%= member[:network][:interfaces][:eth1][:addresses].select
   { |address, data| data[:family] == 'inet' }.keys[0] %>
-	<% end -%>  
+	<% end -%>
 
 <% if node["haproxy"]["enable_admin"] -%>
 listen admin 0.0.0.0:<%= @admin["port"] %>
@@ -606,10 +643,10 @@ vagrant@chefd:~$ knife environment edit lab_environment
 
 ---
 #chef client
+
 ```
 vagrant@chefd:~$ ssh chefc2.local sudo /usr/bin/chef-client
 vagrant@chefd:~$ ssh chefc3.local sudo /usr/bin/chef-client
-
 ```
 ---
 #Conclusions
@@ -632,7 +669,7 @@ knife user <edit|show|delete|add|list> user_name
 
 knife node <edit|show|delete|list> node_name
 
-knife cookbook <upload|show|delete|create|list> cookbook_name 
+knife cookbook <upload|show|delete|create|list> cookbook_name
 
 knife environment <edit|show|delete|create|list> [from file] environment_name|file_name.json
 
@@ -640,6 +677,64 @@ knife role <edit|show|delete|create|list> [from file] role_name|file_name.json
 
 knife data bag <edit|show|delete|create|list> [from file] data_bag_name item_name|file_name.json
 ```
+
+---
+# knife concepts
+
+- Top-level (recipe, role, ...)
+- Expanded (recipes, roles, ...)
+
+---
+# knife party
+
+- chef gem install knife-psearch
+- knife exec
+- knife ssh/pssh
+- msshs
+
+---
+# knife toolbelt
+
+## Regexp only for human use
+
+```
+knife node show <nodename> -a zendesk_config.deploy_projects
+
+knife node show <nodename> -a lldp
+
+knife search node 'zendesk_config_hostgroup:hostgroup AND zendesk_config_pod:[0-9]{1,2}' -i
+
+knife search node 'zendesk_config_pod:[0-9]{1,2} AND virtualization_role:(host|guest)' -i
+
+knife search node 'dmi_system_product_name:"PowerEdge R(620|720)"' -a dmi.bios.bios_revision
+
+knife search node 'ec2:*' -a ec2
+
+knife search node 'ec2:*' -a ec2.instance_type -a ec2.ami_id -a ec2.placement_availability_zone
+
+knife node show <nodename> -a kernel.release
+```
+
+---
+# EXEC FTW!
+
+```
+knife exec -E 'users = [];
+nodes.find("chef_environment:production") { |n|
+  n[:etc][:passwd].select { |user, options|
+    options[:uid] >= 1000
+  }.each { |user, options|
+    users << user
+  }
+};
+users.uniq.each { |user| puts user }'
+```
+
+---
+# Group exercise
+
+1. Build a cookbook or admin tool using the concepts of the training
+1. Present and explain your implementation to the other groups
 
 ---
 #BONUS CONTENT
