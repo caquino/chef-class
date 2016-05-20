@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 ENV['DEFAULT_VAGRANT_PROVIDER'] = "virtualbox"
 chef_version = "12.6.0-1"
-chefdk_version = "0.14.-1"
+chefdk_version = "0.14.25-1"
 clients = (1..3)
 $bscript = <<BSCRIPT
 apt-get update -qq
@@ -55,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :chefd do |dev|
     dev.vm.hostname = "chefd.local"
     dev.vm.provision "shell", inline: "curl -L -s -C - -o chefdk_#{chefdk_version}_amd64.deb  https://packages.chef.io/stable/ubuntu/12.04/chefdk_#{chefdk_version}_amd64.deb"
-    dev.vm.provision "shell", inline: "dpkg -i chefdk_{chefdk_version}_amd64.deb"
+    dev.vm.provision "shell", inline: "dpkg -i chefdk_#{chefdk_version}_amd64.deb"
     dev.vm.provision "shell", inline: "cp -a /chef/deb-cache/* /var/cache/apt/archives/ ; exit 0"
     dev.vm.provision "shell", inline: "ln -s /chef/dev/config/ ~vagrant/.chef"
     dev.vm.provision "shell", inline: "ln -s /chef/dev/ ~vagrant/chef"
