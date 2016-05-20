@@ -8,6 +8,7 @@ chefdk_version = "0.11.2-1"
 clients = (1..3)
 
 $bscript = <<BSCRIPT
+apt-get update -qq
 echo "Provisioning repository, basic packages and restoring deb-cache"
 curl -s https://packagecloud.io/install/repositories/chef/stable/script.deb.sh | bash
 DEBIAN_FRONTEND=noninteractive apt-get -y install curl vim git avahi-daemon build-essential
