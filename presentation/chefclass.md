@@ -6,9 +6,21 @@ slidenumbers: true
 #[FIT]BUDDHY
 
 ---
-#[FIT]WHISKEY
-#[FIT]TANGO
-#[FIT]FOXTROT?
+# REQUIREMENTS
+1. Homebrew _http://brew.sh/_ (*brew doctor!*)
+1. brew-cask _brew install caskroom/cask/brew-cask_
+1. Virtualbox _brew cask install virtualbox_
+1. Vagrant _brew cask install vagrant_
+1. Git _brew install git_
+
+_Available @ Finder > Shared > 13589-caquino > Chef-Class_
+
+---
+# Lab
+## bootstrap
+1. git clone http://github.com/caquino/chef-class
+1. cd chef-class
+1. vagrant up
 
 ---
 # What's Chef?
@@ -39,23 +51,6 @@ slidenumbers: true
 - Enterprise edition
 - Hosted
 - chef-solo
-
----
-# REQUIREMENTS
-1. Homebrew _http://brew.sh/_ (*brew doctor!*)
-1. brew-cask _brew install caskroom/cask/brew-cask_
-1. Virtualbox _brew cask install virtualbox_
-1. Vagrant _brew cask install vagrant_
-1. Git _brew install git_
-
-_Available @ Finder > Shared > 13589-caquino > Chef-Class_
-
----
-# Lab
-## bootstrap
-1. git clone http://github.com/caquino/chef-class
-1. cd chef-class
-1. vagrant up
 
 ---
 # LAB
@@ -735,16 +730,6 @@ users.uniq.each { |user| puts user }'
 
 1. Build a cookbook or admin tool using the concepts of the training
 1. Present and explain your implementation to the other groups
-
----
-#BONUS CONTENT
-- open source cookbooks
-
-###ADVANCED CLASS - TODO
-- LWRP's
-- Template Helpers
-- Reporting Handlers
-- Testing (chefspec, serverspec, minitest-handler, berkshelf, kitchen)
 
 ---
 ![](http://d16cvnquvjw7pr.cloudfront.net/www/img/p-brand/mentor-bg-2X.png)
