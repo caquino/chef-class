@@ -54,8 +54,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :chefd do |dev|
     dev.vm.hostname = "chefd.local"
-    dev.vm.provision "shell", inline: "curl -L -s -C - -o chefdk_#{chefdk_version}_amd64.deb  https://packages.chef.io/stable/ubuntu/12.04/chefdk_#{chefdk_version}_amd64.deb"
-    dev.vm.provision "shell", inline: "dpkg -i chefdk_#{chefdk_version}_amd64.deb"
+    dev.vm.provision "shell", inline: "curl -L -s -C - -o /chef/client/chefdk_#{chefdk_version}_amd64.deb  https://packages.chef.io/stable/ubuntu/12.04/chefdk_#{chefdk_version}_amd64.deb"
+    dev.vm.provision "shell", inline: "dpkg -i /chef/client/chefdk_#{chefdk_version}_amd64.deb"
     dev.vm.provision "shell", inline: "cp -a /chef/deb-cache/* /var/cache/apt/archives/ ; exit 0"
     dev.vm.provision "shell", inline: "ln -s /chef/dev/config/ ~vagrant/.chef"
     dev.vm.provision "shell", inline: "ln -s /chef/dev/ ~vagrant/chef"
