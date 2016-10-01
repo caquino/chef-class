@@ -31,13 +31,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.synced_folder "./chef/", "/chef/" #, type: "nfs"
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "256"]
+    vb.customize ["modifyvm", :id, "--memory", "196"]
     vb.customize ["modifyvm", :id, "--cpus", "1"]
   end
 
   config.vm.define :chefs do |server|
     config.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "1792"]
+      vb.customize ["modifyvm", :id, "--memory", "1536"]
       vb.customize ["modifyvm", :id, "--cpus", "2"]
     end
     server.vm.hostname = "chefs.local"
