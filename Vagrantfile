@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--cpus", "2"]
     end
     server.vm.hostname = "chefs.local"
-    server.vm.provision "shell", inline: "curl -L -s -C - -o /chef/server/chef-server-core_#{chef_version}_amd64.deb https://packages.chef.io/stable/ubuntu/14.04/chef-server-core_#{chef_version}_amd64.deb"
+    server.vm.provision "shell", inline: "curl -L -s -C - -o /chef/server/chef-server-core_#{chef_version}_amd64.deb https://packages.chef.io/stable/ubuntu/14.04/chef-server-core_#{chef_version}_amd64.deb;exit 0"
     server.vm.provision "shell", inline: "dpkg -i /chef/server/chef-server-core_#{chef_version}_amd64.deb"
     server.vm.provision "shell", inline: "chef-server-ctl reconfigure"
     server.vm.provision "shell", inline: "sleep 30"
@@ -54,7 +54,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :chefd do |dev|
     dev.vm.hostname = "chefd.local"
-    dev.vm.provision "shell", inline: "curl -L -s -C - -o /chef/client/chefdk_#{chefdk_version}_amd64.deb  https://packages.chef.io/stable/ubuntu/12.04/chefdk_#{chefdk_version}_amd64.deb"
+    dev.vm.provision "shell", inline: "curl -L -s -C - -o /chef/client/chefdk_#{chefdk_version}_amd64.deb  https://packages.chef.io/stable/ubuntu/12.04/chefdk_#{chefdk_version}_amd64.deb;exit 0"
     dev.vm.provision "shell", inline: "dpkg -i /chef/client/chefdk_#{chefdk_version}_amd64.deb"
     dev.vm.provision "shell", inline: "cp -a /chef/deb-cache/* /var/cache/apt/archives/ ; exit 0"
     dev.vm.provision "shell", inline: "ln -s /chef/dev/config/ ~vagrant/.chef"
